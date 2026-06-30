@@ -1,0 +1,67 @@
+# Dependencies
+node_modules/
+.venv/
+venv/
+
+# Build output and generated caches
+.next/
+.intlayer/
+.turbo/
+dist/
+build/
+out/
+coverage/
+htmlcov/
+target/
+*.tsbuildinfo
+.cache/
+.parcel-cache/
+.eslintcache
+
+# Python caches and reports
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+
+# Local configuration and secrets
+.env
+.env.*
+!**/.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+secrets/
+credentials/
+compose.override.yaml
+compose.override.yml
+
+# Runtime state and uploaded files
+data/
+apps/server/var/
+*.sqlite
+*.sqlite3
+*.db
+
+# Logs and temporary files
+*.log
+logs/
+tmp/
+.tmp/
+*.tmp
+
+# Editors and operating systems
+.idea/
+.vscode/
+.fleet/
+*.iml
+*.swp
+*.swo
+.DS_Store
+Thumbs.db

@@ -1,0 +1,12 @@
+archive/
+node_modules/
+.next/
+target/
+.venv/
+.pytest_cache/
+.intlayer/
+apps/web/.intlayer/
+apps/web/public/mockServiceWorker.js
+packages/api-contract/src/generated/
+packages/api-contract/generated/
+apps/server/src/main/resources/db/version/
