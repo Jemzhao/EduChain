@@ -1,0 +1,23 @@
+{
+  "name": "educhain",
+  "private": true,
+  "license": "Apache-2.0",
+  "packageManager": "pnpm@10.34.5",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "build:web": "pnpm --filter @educhain/web build",
+    "dev:web": "pnpm --filter @educhain/web dev",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "contract:generate": "pnpm --filter @educhain/api-contract generate",
+    "contract:validate": "redocly lint packages/api-contract/openapi/openapi.yaml",
+    "structure:check": "node scripts/check-architecture.mjs",
+    "typecheck:web": "pnpm --filter @educhain/web typecheck"
+  },
+  "devDependencies": {
+    "@redocly/cli": "2.49.0",
+    "prettier": "3.9.6"
+  }
+}
