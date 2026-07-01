@@ -1,0 +1,79 @@
+:root {
+  color-scheme: light dark;
+
+  --ed-color-canvas: light-dark(oklch(0.985 0.002 250), oklch(0.16 0.008 250));
+  --ed-color-surface: light-dark(oklch(1 0 0), oklch(0.2 0.01 250));
+  --ed-color-surface-subtle: light-dark(oklch(0.965 0.004 250), oklch(0.24 0.012 250));
+  --ed-color-surface-strong: light-dark(oklch(0.93 0.006 250), oklch(0.29 0.014 250));
+  --ed-color-text: light-dark(oklch(0.2 0.01 250), oklch(0.94 0.006 250));
+  --ed-color-text-secondary: light-dark(oklch(0.45 0.012 250), oklch(0.75 0.01 250));
+  --ed-color-text-tertiary: light-dark(oklch(0.58 0.01 250), oklch(0.64 0.012 250));
+  --ed-color-border: light-dark(oklch(0.88 0.008 250), oklch(0.34 0.015 250));
+  --ed-color-border-strong: light-dark(oklch(0.76 0.012 250), oklch(0.46 0.018 250));
+  --ed-color-accent: light-dark(oklch(0.55 0.17 253), oklch(0.7 0.14 253));
+  --ed-color-accent-hover: light-dark(oklch(0.49 0.17 253), oklch(0.76 0.12 253));
+  --ed-color-accent-soft: light-dark(oklch(0.94 0.035 253), oklch(0.28 0.045 253));
+  --ed-color-success: light-dark(oklch(0.5 0.12 150), oklch(0.7 0.11 150));
+  --ed-color-success-soft: light-dark(oklch(0.95 0.035 150), oklch(0.27 0.035 150));
+  --ed-color-warning: light-dark(oklch(0.61 0.13 75), oklch(0.78 0.11 80));
+  --ed-color-warning-soft: light-dark(oklch(0.96 0.04 83), oklch(0.29 0.04 80));
+  --ed-color-danger: light-dark(oklch(0.56 0.19 25), oklch(0.72 0.15 25));
+  --ed-color-danger-soft: light-dark(oklch(0.95 0.035 25), oklch(0.28 0.045 25));
+  --ed-color-focus: light-dark(oklch(0.62 0.16 253), oklch(0.75 0.13 253));
+
+  --ed-font-sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --ed-font-mono: ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+
+  --ed-font-size-xs: 0.75rem;
+  --ed-font-size-sm: 0.875rem;
+  --ed-font-size-md: 1rem;
+  --ed-font-size-lg: 1.125rem;
+  --ed-font-size-xl: 1.5rem;
+  --ed-font-size-2xl: clamp(2rem, 5vw, 3.5rem);
+
+  --ed-line-height-tight: 1.2;
+  --ed-line-height-normal: 1.5;
+  --ed-line-height-reading: 1.7;
+
+  --ed-space-1: 0.25rem;
+  --ed-space-2: 0.5rem;
+  --ed-space-3: 0.75rem;
+  --ed-space-4: 1rem;
+  --ed-space-6: 1.5rem;
+  --ed-space-8: 2rem;
+  --ed-space-12: 3rem;
+  --ed-space-16: 4rem;
+
+  --ed-radius-sm: 0.5rem;
+  --ed-radius-md: 0.75rem;
+  --ed-radius-pill: 999px;
+
+  --ed-shadow-float: 0 16px 40px oklch(0.2 0.01 250 / 0.12);
+
+  --ed-duration-feedback: 150ms;
+  --ed-duration-layout: 220ms;
+  --ed-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+
+  --ed-content-reading: 46rem;
+  --ed-content-form: 40rem;
+  --ed-content-page: 75rem;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+:root[data-theme="system"] {
+  color-scheme: light dark;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --ed-duration-feedback: 0ms;
+    --ed-duration-layout: 0ms;
+  }
+}
