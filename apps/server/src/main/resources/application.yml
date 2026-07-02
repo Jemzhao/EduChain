@@ -1,0 +1,122 @@
+spring:
+  application:
+    name: educhain-server
+  autoconfigure:
+    exclude: org.springframework.boot.security.autoconfigure.UserDetailsServiceAutoConfiguration
+  datasource:
+    url: jdbc:mysql://${EDUCHAIN_DB_HOST:localhost}:${EDUCHAIN_DB_PORT:3306}/${EDUCHAIN_DB_NAME:educhain}?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
+    username: ${EDUCHAIN_DB_USER:educhain}
+    password: ${EDUCHAIN_DB_PASSWORD:educhain_local}
+    hikari:
+      maximum-pool-size: ${EDUCHAIN_DB_POOL_MAX:12}
+      minimum-idle: ${EDUCHAIN_DB_POOL_MIN:2}
+      connection-timeout: 3000
+      validation-timeout: 1000
+  data:
+    redis:
+      host: ${EDUCHAIN_REDIS_HOST:localhost}
+      port: ${EDUCHAIN_REDIS_PORT:6379}
+      timeout: 2s
+      repositories:
+        enabled: false
+  flyway:
+    locations: classpath:db/version
+    validate-on-migrate: true
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+  mvc:
+    problemdetails:
+      enabled: true
+  mail:
+    host: ${EDUCHAIN_SMTP_HOST:localhost}
+    port: ${EDUCHAIN_SMTP_PORT:1025}
+    username: ${EDUCHAIN_SMTP_USERNAME:}
+    password: ${EDUCHAIN_SMTP_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: ${EDUCHAIN_SMTP_AUTH:false}
+          starttls:
+            enable: ${EDUCHAIN_SMTP_STARTTLS:false}
+  threads:
+    virtual:
+      enabled: true
+
+educhain:
+  runtime-safety:
+    environment: ${EDUCHAIN_DEPLOYMENT_ENVIRONMENT:LOCAL}
+  local-bootstrap:
+    enabled: ${EDUCHAIN_LOCAL_BOOTSTRAP_ENABLED:false}
+    admin-email: ${EDUCHAIN_LOCAL_ADMIN_EMAIL:}
+    admin-handle: ${EDUCHAIN_LOCAL_ADMIN_HANDLE:}
+    admin-display-name: ${EDUCHAIN_LOCAL_ADMIN_DISPLAY_NAME:}
+    admin-password: ${EDUCHAIN_LOCAL_ADMIN_PASSWORD:}
+  web-security:
+    allowed-origins: ${EDUCHAIN_CORS_ALLOWED_ORIGINS:http://localhost:3000,http://127.0.0.1:3000}
+  rate-limit:
+    enabled: ${EDUCHAIN_RATE_LIMIT_ENABLED:true}
+    authentication-requests: ${EDUCHAIN_RATE_LIMIT_AUTH_REQUESTS:12}
+    verification-requests: ${EDUCHAIN_RATE_LIMIT_VERIFICATION_REQUESTS:30}
+    write-requests: ${EDUCHAIN_RATE_LIMIT_WRITE_REQUESTS:120}
+    window: ${EDUCHAIN_RATE_LIMIT_WINDOW:1m}
+  auth:
+    issuer: educhain-server
+    audience: educhain-web
+    access-token-ttl: 15m
+    refresh-token-ttl: 30d
+    password-reset-ttl: 20m
+    session-secret: ${EDUCHAIN_SESSION_SECRET}
+    secure-cookies: ${EDUCHAIN_SECURE_COOKIES:true}
+    password-reset-email-enabled: ${EDUCHAIN_PASSWORD_RESET_EMAIL_ENABLED:false}
+    password-reset-from: ${EDUCHAIN_PASSWORD_RESET_FROM:no-reply@educhain.local}
+    password-reset-base-url: ${EDUCHAIN_PASSWORD_RESET_BASE_URL:http://localhost:3000/zh-CN/reset-password}
+  file-storage:
+    root: ${EDUCHAIN_FILE_ROOT:./var/files}
+    max-upload-bytes: ${EDUCHAIN_FILE_MAX_BYTES:26214400}
+    upload-ttl: 30m
+  evidence:
+    gateway-base-url: ${EDUCHAIN_EVIDENCE_GATEWAY_URL:http://localhost:8081}
+    service-token: ${EDUCHAIN_EVIDENCE_SERVICE_TOKEN}
+    backend: ${EDUCHAIN_EVIDENCE_BACKEND:SIMULATOR}
+    author-pseudonym-secret: ${EDUCHAIN_EVIDENCE_AUTHOR_SECRET}
+    request-timeout: ${EDUCHAIN_EVIDENCE_REQUEST_TIMEOUT:5s}
+    poll-delay: ${EDUCHAIN_EVIDENCE_POLL_DELAY:2s}
+    retry-delay: ${EDUCHAIN_EVIDENCE_RETRY_DELAY:10s}
+    lease-duration: ${EDUCHAIN_EVIDENCE_LEASE_DURATION:30s}
+    max-attempts: ${EDUCHAIN_EVIDENCE_MAX_ATTEMPTS:8}
+
+server:
+  port: ${EDUCHAIN_SERVER_PORT:8080}
+  shutdown: graceful
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      show-details: never
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+logging:
+  level:
+    root: INFO
+    com.educhain: INFO
+  pattern:
+    level: "%5p [requestId:%X{requestId:-none}]"
