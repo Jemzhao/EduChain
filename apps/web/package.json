@@ -1,0 +1,45 @@
+{
+  "name": "@educhain/web",
+  "version": "0.1.0",
+  "private": true,
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev",
+    "lint": "eslint . --max-warnings=0",
+    "start": "next start",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@educhain/api-contract": "workspace:*",
+    "@educhain/design-tokens": "workspace:*",
+    "@tanstack/react-query": "5.102.8",
+    "intlayer": "9.4.1",
+    "lucide-react": "1.38.0",
+    "msw": "2.15.0",
+    "next": "16.3.3",
+    "next-intlayer": "9.4.1",
+    "openapi-fetch": "0.17.0",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "react-hook-form": "7.87.0",
+    "zod": "4.5.4"
+  },
+  "devDependencies": {
+    "@intlayer/swc": "9.4.1",
+    "@tailwindcss/postcss": "4.3.3",
+    "@types/node": "24.13.3",
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.3",
+    "eslint": "9.39.5",
+    "eslint-config-next": "16.3.3",
+    "postcss": "8.5.6",
+    "tailwindcss": "4.3.3",
+    "typescript": "5.9.3"
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
+  }
+}
