@@ -1,0 +1,52 @@
+[build-system]
+requires = ["hatchling==1.28.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "educhain-evidence"
+version = "0.1.0"
+description = "EduChain evidence gateway"
+license = "Apache-2.0"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "fastapi==0.137.1",
+  "pydantic==2.13.5",
+  "pydantic-settings==2.15.0",
+  "qrcode==8.2",
+  "reportlab==4.4.9",
+  "uvicorn[standard]==0.52.4",
+]
+
+[project.optional-dependencies]
+dev = [
+  "httpx==0.28.1",
+  "mypy==2.3.1",
+  "pytest==9.1.1",
+  "ruff==0.16.5",
+  "types-qrcode==8.2.0.20260518",
+  "types-reportlab==4.5.1.20260827",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/educhain_evidence"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
+
+[tool.ruff.lint.per-file-ignores]
+"src/educhain_evidence/adapters/certificate/generator.py" = ["RUF001"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+plugins = ["pydantic.mypy"]
+files = ["src"]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+pythonpath = ["src"]
+testpaths = ["tests"]
