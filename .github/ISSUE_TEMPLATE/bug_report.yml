@@ -1,0 +1,84 @@
+name: Bug report
+description: 报告可复现的功能、接口或工程问题
+title: "[Bug]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢反馈。安全漏洞请勿填写此表单，请改用仓库的私密安全报告入口。
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: 受影响组件
+      options:
+        - Web
+        - Java Server
+        - Evidence Gateway
+        - OpenAPI / shared packages
+        - Docker / documentation
+        - Unsure
+    validations:
+      required: true
+
+  - type: dropdown
+    id: mode
+    attributes:
+      label: 运行模式
+      options:
+        - Mock
+        - Remote / full stack
+        - ChainMaker
+        - Not applicable
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: 问题说明
+      description: 简明说明实际发生了什么。
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: 最小复现步骤
+      placeholder: |
+        1. 启动……
+        2. 打开……
+        3. 执行……
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 预期结果
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: 环境信息
+      description: 操作系统、浏览器、Java、Node、Python、Docker 及相关版本。
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: 已脱敏日志或截图
+      description: 不要包含密码、令牌、Cookie、个人数据或内部密钥。
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: 提交前确认
+      options:
+        - label: 我已搜索现有 Issue，未发现相同问题。
+          required: true
+        - label: 我确认内容不包含敏感数据或未公开漏洞细节。
+          required: true
