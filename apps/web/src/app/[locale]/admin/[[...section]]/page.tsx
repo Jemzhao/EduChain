@@ -6,7 +6,7 @@ import { Container } from "@/components/layout/container";
 import { SiteHeader } from "@/components/layout/site-header";
 import { AdminWorkspace, type AdminSection } from "@/features/admin/components/admin-workspace";
 
-const sections = new Set<AdminSection>([
+const sectionKeys = [
   "overview",
   "users",
   "content",
@@ -19,9 +19,21 @@ const sections = new Set<AdminSection>([
   "maintenance",
   "audit",
   "health",
-]);
+] as const satisfies readonly AdminSection[];
+const sections = new Set<AdminSection>(sectionKeys);
 
 type AdminPageProps = { params: Promise<{ locale?: string; section?: string[] }> };
+
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return [
+    { section: [] },
+    ...sectionKeys
+      .filter((section) => section !== "overview")
+      .map((section) => ({ section: [section] })),
+  ];
+}
 
 export default async function AdminPage({ params }: AdminPageProps) {
   const { locale, section } = await params;

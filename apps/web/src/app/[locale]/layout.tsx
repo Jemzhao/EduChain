@@ -11,6 +11,8 @@ import { themeInitializationScript } from "@/lib/theme/theme-preference";
 
 export { generateStaticParams } from "next-intlayer";
 
+export const dynamicParams = false;
+
 const LocaleLayout: NextLayoutIntlayer = async ({ children, params }) => {
   const { locale } = await params;
   const currentLocale = locale ?? Locales.CHINESE_SIMPLIFIED_CHINA;

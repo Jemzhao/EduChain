@@ -5,7 +5,7 @@ import { ArrowUpRight, Clock3, ShieldCheck } from "lucide-react";
 import Link from "next/link";
 import { useIntlayer } from "next-intlayer";
 
-import { localizedRoute } from "@/lib/routing/localized-route";
+import { resourceRoute } from "@/lib/routing/localized-route";
 import { categoryName } from "@/features/taxonomy/category-copy";
 
 type ResourceCardData = components["schemas"]["ResourceCard"];
@@ -41,7 +41,7 @@ export function ResourceCard({ locale, resource }: { locale: string; resource: R
       <h2 className="mt-5 mb-0 text-xl leading-snug font-semibold tracking-[-0.025em]">
         <Link
           className="no-underline after:absolute after:inset-0"
-          href={localizedRoute(locale, `/resources/${resource.slug}`)}
+          href={resourceRoute(locale, resource.slug)}
         >
           {resource.title}
         </Link>

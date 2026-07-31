@@ -11,7 +11,7 @@ import { ApiError } from "@/data-access/http/api-error";
 import { ConfirmationReasonAction } from "@/components/patterns/confirmation-reason-action";
 import { restoreOwnResource, withdrawOwnResource } from "@/data-access/mutations/resources";
 import { listMyResources } from "@/data-access/queries/resources";
-import { localizedRoute } from "@/lib/routing/localized-route";
+import { localizedRoute, resourceEditorRoute, resourceRoute } from "@/lib/routing/localized-route";
 
 type ResourceStatus = components["schemas"]["ResourceStatus"];
 
@@ -137,7 +137,7 @@ export function ResourceWorkspace({ locale }: { locale: string }) {
                 {resource.status !== "WITHDRAWN" ? (
                   <Link
                     className="inline-flex items-center gap-2 text-sm font-semibold text-accent no-underline hover:underline"
-                    href={localizedRoute(locale, `/studio/resources/${resource.resourceId}/edit`)}
+                    href={resourceEditorRoute(locale, resource.resourceId)}
                   >
                     <FilePenLine aria-hidden="true" className="size-4" />
                     {content.continueEditing}
@@ -146,7 +146,7 @@ export function ResourceWorkspace({ locale }: { locale: string }) {
                 {resource.status === "PUBLISHED" ? (
                   <Link
                     className="inline-flex items-center gap-2 text-sm font-semibold text-ink-secondary no-underline hover:text-ink"
-                    href={localizedRoute(locale, `/resources/${resource.slug}`)}
+                    href={resourceRoute(locale, resource.slug)}
                   >
                     {content.viewPublished}
                     <ArrowUpRight aria-hidden="true" className="size-4" />

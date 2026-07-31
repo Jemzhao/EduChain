@@ -7,7 +7,7 @@ import { useIntlayer } from "next-intlayer";
 
 import { getPublicEvidence } from "@/data-access/queries/evidence";
 import { publicEnvironment } from "@/lib/env/public";
-import { localizedRoute } from "@/lib/routing/localized-route";
+import { localizedRoute, resourceRoute } from "@/lib/routing/localized-route";
 
 export function EvidenceDetail({ locale, proofId }: { locale: string; proofId: string }) {
   const content = useIntlayer("evidence");
@@ -44,7 +44,7 @@ export function EvidenceDetail({ locale, proofId }: { locale: string; proofId: s
       <header className="border-b border-border pb-10">
         <Link
           className="inline-flex items-center gap-2 text-sm font-semibold text-ink-secondary no-underline hover:text-accent"
-          href={localizedRoute(locale, `/resources/${proof.resourceSlug}`)}
+          href={resourceRoute(locale, proof.resourceSlug)}
         >
           <ArrowLeft aria-hidden="true" className="size-4" />
           {content.backToResource}

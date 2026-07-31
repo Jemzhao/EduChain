@@ -15,7 +15,7 @@ import { getBrowsingHistory, getMyActivity } from "@/data-access/queries/communi
 import { listRecommendedResources } from "@/data-access/queries/resources";
 import { getCurrentUser } from "@/data-access/queries/user";
 import { ResourceCard } from "@/features/resources/components/resource-card";
-import { localizedRoute } from "@/lib/routing/localized-route";
+import { localizedRoute, resourceRoute } from "@/lib/routing/localized-route";
 
 type ActivityType = components["schemas"]["ActivityType"];
 
@@ -155,7 +155,7 @@ export function ActivityPage({ locale }: { locale: string }) {
                   <li className="py-4 first:pt-0" key={item.id}>
                     <Link
                       className="text-sm font-semibold text-ink no-underline hover:text-accent"
-                      href={localizedRoute(locale, `/resources/${item.resourceId}`)}
+                      href={resourceRoute(locale, item.resourceId)}
                     >
                       {String(activityLabels[item.type])}
                     </Link>

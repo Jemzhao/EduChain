@@ -9,8 +9,20 @@ import {
   type InformationPageKey,
 } from "@/features/information/components/information-page";
 
-const pages = new Set<InformationPageKey>(["terms", "privacy", "copyright", "disclaimer"]);
+const pageKeys = [
+  "terms",
+  "privacy",
+  "copyright",
+  "disclaimer",
+] as const satisfies readonly InformationPageKey[];
+const pages = new Set<InformationPageKey>(pageKeys);
 type Props = { params: Promise<{ locale?: string; legalPage: string }> };
+
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return pageKeys.map((legalPage) => ({ legalPage }));
+}
 
 export default async function Page({ params }: Props) {
   const { locale, legalPage } = await params;

@@ -111,14 +111,26 @@ pnpm dev:web
 
 Mock 模式会在浏览器内启动与 OpenAPI 形状一致的模拟接口，不需要 Java、Python、MySQL 或 Redis。登录页提供本地管理员快捷入口。
 
+### GitHub Pages Mock 演示
+
+仓库提供独立的静态导出模式，目标地址为 <https://jemzhaoo.github.io/EduChain/>。该演示使用浏览器内 Mock Service Worker，不连接 Java Server、Evidence Gateway 或生产数据；登录状态、草稿和互动数据只保存在当前浏览器中。
+
+本地生成与 GitHub Pages 一致的静态产物：
+
+```bash
+pnpm build:web:pages
+```
+
+产物位于 `apps/web/out`。合并到 `main` 后，[Pages 工作流](.github/workflows/pages.yml) 会构建并发布该目录；首次启用时需在仓库 Settings → Pages 中将 Source 设为 GitHub Actions。
+
 ## Mock 与 Remote 模式
 
-| 模式     | 用途                     | 数据来源                     | 允许环境   |
-| -------- | ------------------------ | ---------------------------- | ---------- |
-| `mock`   | 前端开发、演示、视觉评审 | 浏览器内 Mock Service Worker | 仅本地     |
-| `remote` | 联调、验收、部署         | Java Server 与数据库         | 非本地可用 |
+| 模式     | 用途                         | 数据来源                     | 允许环境       |
+| -------- | ---------------------------- | ---------------------------- | -------------- |
+| `mock`   | 前端开发、静态演示、视觉评审 | 浏览器内 Mock Service Worker | 本地或静态导出 |
+| `remote` | 联调、验收、服务端部署       | Java Server 与数据库         | 非本地可用     |
 
-配置示例位于 [apps/web/.env.example](apps/web/.env.example)。非本地环境启用 Mock 会被运行时保护直接拒绝。
+配置示例位于 [apps/web/.env.example](apps/web/.env.example)。除显式静态导出外，非本地环境启用 Mock 会被运行时保护直接拒绝。
 
 ## 质量检查
 

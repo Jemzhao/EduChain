@@ -58,16 +58,17 @@ for (const required of [
   "CHANGELOG.md",
   ".gitignore",
   ".github/workflows/ci.yml",
+  ".github/workflows/pages.yml",
   ".github/PULL_REQUEST_TEMPLATE.md",
 ]) {
   if (!existsSync(join(root, required))) fail(`required repository file is missing (${required})`);
 }
 
-const ciWorkflow = join(root, ".github/workflows/ci.yml");
-if (existsSync(ciWorkflow)) {
-  for (const match of source(ciWorkflow).matchAll(/^\s*uses:\s*([^\s#]+)/gm)) {
+const workflowDirectory = join(root, ".github/workflows");
+for (const workflow of walk(workflowDirectory, (file) => /\.ya?ml$/.test(file))) {
+  for (const match of source(workflow).matchAll(/^\s*uses:\s*([^\s#]+)/gm)) {
     if (!/@[a-f0-9]{40}$/.test(match[1])) {
-      fail(`CI action is not pinned to a full commit (${match[1]})`, ciWorkflow);
+      fail(`GitHub action is not pinned to a full commit (${match[1]})`, workflow);
     }
   }
 }

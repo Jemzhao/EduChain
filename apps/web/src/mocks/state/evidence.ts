@@ -1,5 +1,6 @@
 import type { components } from "@educhain/api-contract";
 
+import { publicEnvironment } from "@/lib/env/public";
 import { mockNow } from "@/mocks/clock";
 import { mockPublishedResources } from "@/mocks/fixtures/resources";
 
@@ -39,7 +40,7 @@ const proofs = new Map<string, PublicEvidence>(
       submittedAt: new Date(publishedAt + 30_000).toISOString(),
       confirmedAt: new Date(publishedAt + 90_000).toISOString(),
       certificateStatus: "AVAILABLE",
-      certificateUrl: `/api/v1/evidence/${proofId}/certificate`,
+      certificateUrl: `${publicEnvironment.apiBaseUrl}/evidence/${proofId}/certificate`,
     };
     return [proof.proofId, proof];
   }),

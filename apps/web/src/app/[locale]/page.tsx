@@ -5,19 +5,26 @@ import { IntlayerServerProvider } from "next-intlayer/server";
 
 import { SiteHeader } from "@/components/layout/site-header";
 import { HomePage } from "@/features/home/home-page";
+import { publicEnvironment } from "@/lib/env/public";
 
 export const generateMetadata = async ({ params }: LocalPromiseParams): Promise<Metadata> => {
   const { locale } = await params;
   const currentLocale = locale ?? Locales.CHINESE_SIMPLIFIED_CHINA;
   const metadata = getIntlayer("site-metadata", currentLocale);
-  const multilingualUrls = getMultilingualUrls("/");
-  const canonical = multilingualUrls[currentLocale as keyof typeof multilingualUrls];
+  const multilingualUrls = Object.fromEntries(
+    Object.entries(getMultilingualUrls("/")).map(([language, path]) => [
+      language,
+      `${publicEnvironment.basePath}${path}`,
+    ]),
+  );
+  const canonical = multilingualUrls[currentLocale];
+  const defaultUrl = publicEnvironment.basePath || "/";
 
   return {
     ...metadata,
     alternates: {
       canonical,
-      languages: { ...multilingualUrls, "x-default": "/" },
+      languages: { ...multilingualUrls, "x-default": defaultUrl },
     },
     openGraph: {
       ...metadata.openGraph,

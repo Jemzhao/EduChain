@@ -6,7 +6,11 @@ import { useIntlayer } from "next-intlayer";
 
 import { getLedgerBlock, getLedgerTransaction } from "@/data-access/queries/evidence";
 import { blockRoute, sourceName } from "@/features/ledger/components/ledger-page";
-import { localizedRoute } from "@/lib/routing/localized-route";
+import {
+  evidenceRoute,
+  ledgerTransactionRoute,
+  localizedRoute,
+} from "@/lib/routing/localized-route";
 
 export function LedgerBlockDetail({
   locale,
@@ -45,10 +49,7 @@ export function LedgerBlockDetail({
           {block.data.transactions.map((transaction) => (
             <Link
               className="block truncate rounded-sm border border-border bg-surface p-4 font-mono text-sm no-underline hover:border-border-strong"
-              href={localizedRoute(
-                locale,
-                `/ledger/transactions/${encodeURIComponent(transaction.transactionId)}`,
-              )}
+              href={ledgerTransactionRoute(locale, transaction.transactionId)}
               key={transaction.transactionId}
             >
               {transaction.transactionId}
@@ -105,7 +106,7 @@ export function LedgerTransactionDetail({
         ) : null}
         <Link
           className="text-sm font-semibold text-accent no-underline hover:underline"
-          href={localizedRoute(locale, `/evidence/${item.proofId}`)}
+          href={evidenceRoute(locale, item.proofId)}
         >
           {content.viewProof}
         </Link>

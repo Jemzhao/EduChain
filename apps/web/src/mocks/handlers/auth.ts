@@ -1,6 +1,7 @@
 import type { components } from "@educhain/api-contract";
 import { delay, http, HttpResponse } from "msw";
 
+import { publicEnvironment } from "@/lib/env/public";
 import { problemResponse } from "@/mocks/problem";
 import { authState } from "@/mocks/state/auth";
 import { communityState } from "@/mocks/state/community";
@@ -298,7 +299,9 @@ export const userHandlers = [
       user: {
         ...currentUser.user,
         displayName: body.displayName?.trim() ?? currentUser.user.displayName,
-        avatarUrl: body.avatarFileId ? `/api/v1/files/${body.avatarFileId}/content` : null,
+        avatarUrl: body.avatarFileId
+          ? `${publicEnvironment.apiBaseUrl}/files/${body.avatarFileId}/content`
+          : null,
         version: currentUser.user.version + 1,
       },
       profile: {

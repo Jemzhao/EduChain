@@ -1,5 +1,7 @@
 import type { components } from "@educhain/api-contract";
 
+import { publicEnvironment } from "@/lib/env/public";
+
 import { mockProjectPeriod } from "@/mocks/clock";
 import { readMockSession, writeMockSession } from "@/mocks/state/session-storage";
 
@@ -44,7 +46,7 @@ export const fileState = {
     const session: UploadSessionResponse = {
       uploadId,
       fileId,
-      uploadUrl: `/api/v1/uploads/${uploadId}/content`,
+      uploadUrl: `${publicEnvironment.apiBaseUrl}/uploads/${uploadId}/content`,
       method: "PUT",
       expiresAt: mockProjectPeriod.end,
       maxSize: 26_214_400,

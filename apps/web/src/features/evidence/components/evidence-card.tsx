@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useIntlayer } from "next-intlayer";
 
 import { getResourceEvidence } from "@/data-access/queries/evidence";
-import { localizedRoute } from "@/lib/routing/localized-route";
+import { evidenceRoute } from "@/lib/routing/localized-route";
 
 type JobStatus = components["schemas"]["EvidenceJobStatus"];
 
@@ -74,7 +74,7 @@ export function EvidenceCard({
           </p>
           <Link
             className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-accent no-underline hover:underline"
-            href={localizedRoute(locale, `/evidence/${proof.proofId}`)}
+            href={evidenceRoute(locale, proof.proofId)}
           >
             {content.viewProof}
             <ArrowUpRight aria-hidden="true" className="size-4" />

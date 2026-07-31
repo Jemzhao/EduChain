@@ -6,7 +6,7 @@ import { type PropsWithChildren, useEffect, useState } from "react";
 import { Button } from "@/components/primitives/button";
 import { publicEnvironment } from "@/lib/env/public";
 
-const mockServiceWorkerPath = "/mockServiceWorker.js";
+const mockServiceWorkerPath = `${publicEnvironment.basePath}/mockServiceWorker.js`;
 
 function isMockServiceWorker(scriptUrl: string | undefined): boolean {
   if (!scriptUrl) {

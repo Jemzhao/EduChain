@@ -25,7 +25,7 @@ import {
 } from "@/data-access/mutations/community";
 import { getNotifications } from "@/data-access/queries/community";
 import { getCurrentUser } from "@/data-access/queries/user";
-import { localizedRoute } from "@/lib/routing/localized-route";
+import { localizedRoute, resourceRoute } from "@/lib/routing/localized-route";
 
 type Notification = components["schemas"]["NotificationResponse"];
 
@@ -280,7 +280,7 @@ export function NotificationCenter({ locale }: { locale: string }) {
                 {notification.resourceSlug && notification.resourceTitle ? (
                   <Link
                     className="mt-2 inline-block max-w-full truncate text-sm font-semibold text-accent underline-offset-4 hover:underline"
-                    href={localizedRoute(locale, `/resources/${notification.resourceSlug}`)}
+                    href={resourceRoute(locale, notification.resourceSlug)}
                   >
                     {notification.resourceTitle}
                   </Link>

@@ -10,7 +10,7 @@ import { useState } from "react";
 
 import { Button } from "@/components/primitives/button";
 import { createVerification } from "@/data-access/mutations/evidence";
-import { localizedRoute } from "@/lib/routing/localized-route";
+import { evidenceRoute } from "@/lib/routing/localized-route";
 
 type VerificationResult = components["schemas"]["VerificationResult"];
 
@@ -203,7 +203,7 @@ export function VerificationCenter({ locale }: { locale: string }) {
               {result.proof ? (
                 <Link
                   className="mt-5 inline-flex min-h-10 items-center font-semibold text-accent no-underline hover:underline"
-                  href={localizedRoute(locale, `/evidence/${result.proof.proofId}`)}
+                  href={evidenceRoute(locale, result.proof.proofId)}
                 >
                   {content.viewProof}
                 </Link>

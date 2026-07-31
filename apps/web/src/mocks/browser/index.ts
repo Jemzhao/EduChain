@@ -33,6 +33,9 @@ export async function ensureMockWorker(): Promise<void> {
         }
       },
       quiet: true,
+      serviceWorker: {
+        url: `${publicEnvironment.basePath}/mockServiceWorker.js`,
+      },
     });
 
     runtime.startPromise = pendingStart;

@@ -10,7 +10,7 @@ import { useState } from "react";
 import { FormField } from "@/components/forms/form-field";
 import { Button } from "@/components/primitives/button";
 import { createResourceDraft } from "@/data-access/mutations/resources";
-import { localizedRoute } from "@/lib/routing/localized-route";
+import { resourceEditorRoute } from "@/lib/routing/localized-route";
 
 export function NewResource({ locale }: { locale: string }) {
   const content = useIntlayer("studio");
@@ -21,7 +21,7 @@ export function NewResource({ locale }: { locale: string }) {
   const createDraft = useMutation({
     mutationFn: () => createResourceDraft({ title: title.trim(), resourceType }),
     onSuccess: (draft) => {
-      router.push(localizedRoute(locale, `/studio/resources/${draft.resourceId}/edit`));
+      router.push(resourceEditorRoute(locale, draft.resourceId));
     },
   });
 

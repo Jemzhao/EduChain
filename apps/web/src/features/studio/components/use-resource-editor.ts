@@ -16,7 +16,7 @@ import {
 } from "@/data-access/mutations/resources";
 import { listResourceVersions } from "@/data-access/queries/resources";
 import { getCategories, getTags } from "@/data-access/queries/taxonomy";
-import { localizedRoute } from "@/lib/routing/localized-route";
+import { resourceRoute } from "@/lib/routing/localized-route";
 
 export type DraftResponse = components["schemas"]["ResourceDraftResponse"];
 type DraftBody = components["schemas"]["UpdateResourceDraftRequest"];
@@ -126,7 +126,7 @@ export function useResourceEditor({
   const publication = useMutation({
     mutationFn: () => publishResource(resourceId, versionRef.current),
     onSuccess: (result) => {
-      router.push(localizedRoute(locale, `/resources/${result.resource.slug}`));
+      router.push(resourceRoute(locale, result.resource.slug));
     },
   });
 

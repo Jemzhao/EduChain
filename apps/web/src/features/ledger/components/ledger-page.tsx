@@ -7,7 +7,11 @@ import { useIntlayer } from "next-intlayer";
 import { FormEvent, useState } from "react";
 
 import { listLedgerBlocks, searchLedger } from "@/data-access/queries/evidence";
-import { localizedRoute } from "@/lib/routing/localized-route";
+import {
+  evidenceRoute,
+  ledgerBlockRoute,
+  ledgerTransactionRoute,
+} from "@/lib/routing/localized-route";
 
 export function LedgerPage({ locale }: { locale: string }) {
   const content = useIntlayer("ledger-page");
@@ -185,9 +189,9 @@ function ledgerSearchRoute(
     return blockRoute(locale, item.backend, item.networkId, item.blockHeight);
   }
   if (item.kind === "TRANSACTION" && item.transactionId) {
-    return localizedRoute(locale, `/ledger/transactions/${encodeURIComponent(item.transactionId)}`);
+    return ledgerTransactionRoute(locale, item.transactionId);
   }
-  return item.proofId ? localizedRoute(locale, `/evidence/${item.proofId}`) : undefined;
+  return item.proofId ? evidenceRoute(locale, item.proofId) : undefined;
 }
 
 function searchKind(kind: string, content: ReturnType<typeof useIntlayer>) {
@@ -216,10 +220,7 @@ function searchResultIdentifier(item: {
 }
 
 export function blockRoute(locale: string, backend: string, networkId: string, height: number) {
-  return localizedRoute(
-    locale,
-    `/ledger/blocks/${backend}/${encodeURIComponent(networkId)}/${height}`,
-  );
+  return ledgerBlockRoute(locale, backend, networkId, height);
 }
 
 export function sourceName(
