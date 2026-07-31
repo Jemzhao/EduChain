@@ -18,7 +18,13 @@ const icons = {
   dark: Moon,
 } satisfies Record<ThemePreference, typeof Monitor>;
 
-export function ThemeSwitcher() {
+export function ThemeSwitcher({
+  className = "",
+  showLabel = false,
+}: {
+  className?: string;
+  showLabel?: boolean;
+}) {
   const content = useIntlayer("global-navigation");
   const preference = useSyncExternalStore<ThemePreference>(
     subscribeToThemePreference,
@@ -38,13 +44,13 @@ export function ThemeSwitcher() {
   return (
     <button
       aria-label={accessibleLabel}
-      className="inline-flex min-h-10 min-w-10 items-center justify-center gap-2 rounded-sm border border-border bg-surface px-2.5 text-sm font-medium text-ink-secondary hover:bg-surface-subtle hover:text-ink"
+      className={`inline-flex min-h-10 min-w-10 items-center gap-2 rounded-sm border border-border bg-surface px-2.5 text-sm font-medium text-ink-secondary hover:bg-surface-subtle hover:text-ink ${showLabel ? "justify-start" : "justify-center"} ${className}`}
       onClick={() => writeThemePreference(nextPreference)}
       title={accessibleLabel}
       type="button"
     >
       <Icon aria-hidden="true" className="size-4" />
-      <span className="hidden 2xl:inline" aria-live="polite">
+      <span className={showLabel ? "inline" : "hidden 2xl:inline"} aria-live="polite">
         {labels[preference]}
       </span>
     </button>

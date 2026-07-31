@@ -45,7 +45,7 @@ export default async function AdminPage({ params }: AdminPageProps) {
     <IntlayerServerProvider locale={currentLocale}>
       <SiteHeader locale={currentLocale} />
       <main className="py-10 sm:py-14" id="page-content">
-        <Container>
+        <Container size="wide">
           <AdminWorkspace locale={currentLocale} section={currentSection as AdminSection} />
         </Container>
       </main>

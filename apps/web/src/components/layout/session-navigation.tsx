@@ -32,37 +32,37 @@ export function SessionNavigation({ locale }: { locale: string }) {
     <>
       <Link
         aria-label={String(content.library)}
-        className="inline-flex min-h-10 items-center gap-2 rounded-sm px-2 text-sm font-medium text-ink-secondary no-underline hover:bg-surface-subtle hover:text-ink"
+        className="inline-flex min-h-10 shrink-0 items-center gap-2 whitespace-nowrap rounded-sm px-2 text-sm font-medium text-ink-secondary no-underline hover:bg-surface-subtle hover:text-ink"
         href={localizedRoute(locale, "/library")}
       >
         <Bookmark aria-hidden="true" className="size-4" />
-        <span className="hidden xl:inline">{content.library}</span>
+        <span className="sr-only">{content.library}</span>
       </Link>
       <Link
         aria-label={String(content.activity)}
-        className="hidden min-h-10 items-center gap-2 rounded-sm px-2 text-sm font-medium text-ink-secondary no-underline hover:bg-surface-subtle hover:text-ink lg:inline-flex"
+        className="hidden min-h-10 shrink-0 items-center gap-2 whitespace-nowrap rounded-sm px-2 text-sm font-medium text-ink-secondary no-underline hover:bg-surface-subtle hover:text-ink lg:inline-flex"
         href={localizedRoute(locale, "/activity")}
       >
         <History aria-hidden="true" className="size-4" />
-        <span className="hidden xl:inline">{content.activity}</span>
+        <span className="sr-only">{content.activity}</span>
       </Link>
       {canAdminister ? (
         <Link
           aria-label={String(content.administration)}
-          className="hidden min-h-10 items-center gap-2 rounded-sm px-2 text-sm font-medium text-ink-secondary no-underline hover:bg-surface-subtle hover:text-ink lg:inline-flex"
+          className="hidden min-h-10 shrink-0 items-center gap-2 whitespace-nowrap rounded-sm px-2 text-sm font-medium text-ink-secondary no-underline hover:bg-surface-subtle hover:text-ink lg:inline-flex"
           href={localizedRoute(locale, "/admin")}
         >
           <Shield aria-hidden="true" className="size-4" />
-          <span className="hidden xl:inline">{content.administration}</span>
+          <span className="sr-only">{content.administration}</span>
         </Link>
       ) : null}
       <Link
         aria-label={String(content.notifications)}
-        className="relative inline-flex min-h-10 items-center gap-2 rounded-sm px-2 text-sm font-medium text-ink-secondary no-underline hover:bg-surface-subtle hover:text-ink"
+        className="relative inline-flex min-h-10 shrink-0 items-center gap-2 whitespace-nowrap rounded-sm px-2 text-sm font-medium text-ink-secondary no-underline hover:bg-surface-subtle hover:text-ink"
         href={localizedRoute(locale, "/notifications")}
       >
         <Bell aria-hidden="true" className="size-4" />
-        <span className="hidden xl:inline">{content.notifications}</span>
+        <span className="sr-only">{content.notifications}</span>
         {(unreadNotifications.data?.unreadCount ?? 0) > 0 ? (
           <span className="absolute top-1 right-0 flex min-w-4 items-center justify-center rounded-[var(--ed-radius-pill)] bg-accent px-1 text-[0.625rem] leading-4 font-semibold text-white xl:static">
             {Math.min(unreadNotifications.data!.unreadCount, 99)}
@@ -70,13 +70,13 @@ export function SessionNavigation({ locale }: { locale: string }) {
         ) : null}
       </Link>
       <Link
-        className="hidden min-h-10 items-center rounded-sm px-2 text-sm font-medium text-ink-secondary no-underline hover:text-ink md:inline-flex"
+        className="hidden min-h-10 shrink-0 items-center whitespace-nowrap rounded-sm px-2 text-sm font-medium text-ink-secondary no-underline hover:text-ink md:inline-flex"
         href={localizedRoute(locale, "/studio")}
       >
         {content.create}
       </Link>
       <Link
-        className="inline-flex min-h-10 items-center rounded-sm border border-border-strong bg-surface px-3.5 text-sm font-semibold no-underline hover:bg-surface-subtle"
+        className="inline-flex min-h-10 shrink-0 items-center whitespace-nowrap rounded-sm border border-border-strong bg-surface px-3.5 text-sm font-semibold no-underline hover:bg-surface-subtle"
         href={localizedRoute(locale, "/settings/profile")}
       >
         {content.profile}
@@ -84,7 +84,7 @@ export function SessionNavigation({ locale }: { locale: string }) {
     </>
   ) : (
     <Link
-      className="inline-flex min-h-10 items-center rounded-sm border border-border-strong bg-surface px-3.5 text-sm font-semibold no-underline hover:bg-surface-subtle"
+      className="inline-flex min-h-10 shrink-0 items-center whitespace-nowrap rounded-sm border border-border-strong bg-surface px-3.5 text-sm font-semibold no-underline hover:bg-surface-subtle"
       href={localizedRoute(locale, "/sign-in")}
     >
       {content.signIn}

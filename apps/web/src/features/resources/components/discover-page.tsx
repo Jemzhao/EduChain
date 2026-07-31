@@ -175,7 +175,7 @@ export function DiscoverPage({
             <div className="flex flex-wrap gap-2">
               {popularSearches.data?.items.map((item) => (
                 <button
-                  className="min-h-9 rounded-full border border-border bg-surface px-3 text-sm text-ink-secondary hover:border-border-strong hover:text-ink"
+                  className="min-h-10 rounded-full border border-border bg-surface px-3 text-sm text-ink-secondary hover:border-border-strong hover:text-ink"
                   key={item.query}
                   onClick={() => chooseSearch(item.query)}
                   type="button"

@@ -91,16 +91,18 @@ export function CommunityPage({ locale }: { locale: string }) {
         <p className="m-0 text-sm font-semibold tracking-[0.1em] text-accent uppercase">
           {content.eyebrow}
         </p>
-        <h1 className="mt-4 mb-0 text-5xl font-semibold tracking-[-0.045em] sm:text-6xl">
+        <h1 className="mt-4 mb-0 text-4xl font-semibold tracking-[-0.045em] text-pretty sm:text-6xl">
           {content.title}
         </h1>
         <p className="mt-5 max-w-3xl text-lg leading-8 text-ink-secondary">{content.description}</p>
       </header>
 
-      <dl className="grid border-b border-border sm:grid-cols-2 lg:grid-cols-4">
-        {statistics.map(({ icon: Icon, label, value }) => (
+      <dl className="grid grid-cols-2 border-b border-border lg:grid-cols-4">
+        {statistics.map(({ icon: Icon, label, value }, index) => (
           <div
-            className="border-border py-7 sm:border-r sm:px-6 first:pl-0 last:border-r-0"
+            className={`border-border py-5 ${index >= 2 ? "border-t" : ""} ${
+              index % 2 === 0 ? "border-r pr-4" : "pl-4"
+            } lg:border-t-0 lg:border-r lg:px-6 lg:py-7 lg:first:pl-0 lg:last:border-r-0`}
             key={String(label)}
           >
             <dt className="flex items-center gap-2 text-sm text-ink-tertiary">
@@ -134,7 +136,7 @@ export function CommunityPage({ locale }: { locale: string }) {
               ).map(([value, label]) => (
                 <button
                   aria-pressed={scope === value}
-                  className={`min-h-9 rounded-[0.35rem] border-0 px-3 text-sm ${
+                  className={`min-h-10 rounded-[0.35rem] border-0 px-3 text-sm ${
                     scope === value
                       ? "bg-surface-subtle font-semibold text-ink"
                       : "bg-transparent text-ink-tertiary"
@@ -197,7 +199,7 @@ export function CommunityPage({ locale }: { locale: string }) {
             <div className="mt-5 flex flex-wrap gap-2">
               {overview.data.topics.map((topic) => (
                 <Link
-                  className="rounded-[var(--ed-radius-pill)] border border-border bg-surface px-3 py-1.5 text-sm no-underline hover:border-border-strong"
+                  className="inline-flex min-h-10 items-center rounded-[var(--ed-radius-pill)] border border-border bg-surface px-3 py-1.5 text-sm no-underline hover:border-border-strong"
                   href={localizedRoute(locale, `/discover?tags=${encodeURIComponent(topic.slug)}`)}
                   key={topic.slug}
                 >

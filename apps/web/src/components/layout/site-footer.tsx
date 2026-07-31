@@ -30,11 +30,11 @@ export function SiteFooter() {
         <p className="m-0 text-sm font-semibold">EduChain</p>
         <nav
           aria-label={String(content.information)}
-          className="flex max-w-4xl flex-wrap gap-x-5 gap-y-3"
+          className="flex max-w-4xl flex-wrap gap-x-5 gap-y-1"
         >
           {links.map(([path, label]) => (
             <Link
-              className="text-xs text-ink-tertiary no-underline hover:text-ink"
+              className="inline-flex min-h-8 items-center text-xs text-ink-tertiary no-underline hover:text-ink"
               href={localizedRoute(locale, path)}
               key={path}
             >

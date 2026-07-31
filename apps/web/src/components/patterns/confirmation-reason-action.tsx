@@ -45,7 +45,7 @@ export function ConfirmationReasonAction({
     );
   }
   return (
-    <div className="w-full min-w-64 rounded-md border border-border-strong bg-canvas p-4 text-left shadow-sm sm:max-w-sm">
+    <div className="w-full min-w-0 rounded-md border border-border-strong bg-canvas p-4 text-left shadow-sm sm:max-w-sm sm:min-w-64">
       <p className="m-0 text-sm font-semibold">{actionLabel}</p>
       <p className="mt-2 mb-0 break-words text-xs leading-5 text-ink-secondary">{target}</p>
       <p className="mt-3 mb-0 text-xs leading-5 text-ink-tertiary">{impact}</p>

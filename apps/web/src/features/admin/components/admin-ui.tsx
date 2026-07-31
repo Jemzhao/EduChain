@@ -71,7 +71,7 @@ export function SectionHeader({
   return (
     <header className={compact ? "pb-5" : "border-b border-border pb-8"}>
       <h2
-        className={`m-0 font-semibold tracking-[-0.04em] ${compact ? "text-2xl" : "text-4xl sm:text-5xl"}`}
+        className={`m-0 break-words font-semibold tracking-[-0.04em] ${compact ? "text-2xl" : "text-3xl sm:text-5xl"}`}
       >
         {title}
       </h2>
@@ -88,12 +88,15 @@ export function ResponsiveTable({
   children: React.ReactNode;
 }) {
   return (
-    <div className="mt-6 overflow-x-auto rounded-md border border-border bg-surface">
-      <table className="w-full min-w-[48rem] border-collapse text-left">
+    <div className="mt-6 w-full max-w-full overflow-x-auto overscroll-x-contain rounded-md border border-border bg-surface [&_button]:whitespace-nowrap [&_select]:whitespace-nowrap">
+      <table className="w-full min-w-[64rem] border-collapse text-left">
         <thead className="bg-surface-subtle">
           <tr>
             {columns.map((column, index) => (
-              <th className="px-4 py-3 text-xs font-semibold text-ink-tertiary" key={index}>
+              <th
+                className="whitespace-nowrap px-4 py-3 text-xs font-semibold text-ink-tertiary"
+                key={index}
+              >
                 {column}
               </th>
             ))}
@@ -120,7 +123,7 @@ export function ItemList({ empty, children }: { empty: boolean; children: React.
 
 export function StatusBadge({ children }: { children: React.ReactNode }) {
   return (
-    <span className="inline-flex rounded-[var(--ed-radius-pill)] bg-surface-subtle px-2.5 py-1 text-xs font-semibold text-ink-secondary">
+    <span className="inline-flex whitespace-nowrap rounded-[var(--ed-radius-pill)] bg-surface-subtle px-2.5 py-1 text-xs font-semibold text-ink-secondary">
       {children}
     </span>
   );
@@ -129,7 +132,7 @@ export function StatusBadge({ children }: { children: React.ReactNode }) {
 export function DateValue({ value }: { value: string }) {
   const { locale } = useLocale();
   return (
-    <time dateTime={value}>
+    <time className="whitespace-nowrap" dateTime={value}>
       {new Intl.DateTimeFormat(locale, { dateStyle: "medium", timeStyle: "short" }).format(
         new Date(value),
       )}
@@ -199,14 +202,26 @@ export function statusText(status: string, content: ReturnType<typeof useIntlaye
     CHAINMAKER: content.chainmaker,
     CATEGORY: content.categoryKind,
     TAG: content.tagKind,
+    ARTICLE: content.resourceTypeArticle,
+    DOCUMENT: content.resourceTypeDocument,
+    VIDEO: content.resourceTypeVideo,
+    LINK: content.resourceTypeLink,
+    TEXT: content.settingTextType,
+    BOOLEAN: content.settingBooleanType,
     RESOURCE: content.resourceTarget,
     COMMENT: content.commentTarget,
     REPORT: content.reportTarget,
     EVIDENCE_JOB: content.evidenceJobTarget,
     USER: content.userTarget,
+    USER_EXPORT: content.userExportTarget,
+    RESOURCE_EXPORT: content.resourceExportTarget,
+    PLATFORM_STATISTICS: content.platformStatisticsTarget,
+    PLATFORM_SETTING: content.platformSettingTarget,
+    OPERATIONAL_ALERT: content.operationalAlertTarget,
     "java-server": content.javaServer,
     database: content.database,
     "evidence-gateway": content.evidenceGateway,
+    "search.index": content.searchIndex,
     "jvm.heap.used": content.metricJvmHeap,
     "storage.used": content.metricStorage,
     "system.load.per_processor": content.metricSystemLoad,
@@ -215,6 +230,8 @@ export function statusText(status: string, content: ReturnType<typeof useIntlaye
     DATABASE_UNAVAILABLE: content.healthDatabaseUnavailable,
     EVIDENCE_AVAILABLE: content.healthEvidenceAvailable,
     EVIDENCE_DELAYED: content.healthEvidenceDelayed,
+    EVIDENCE_BACKEND_UNAVAILABLE: content.evidenceBackendUnavailable,
+    EVIDENCE_CONFIRMATION_TIMEOUT: content.evidenceConfirmationTimeout,
     SERVER_AVAILABLE: content.healthServerAvailable,
     MODERATOR: content.roleModerator,
     ADMINISTRATOR: content.roleAdministrator,
@@ -236,6 +253,28 @@ export function statusText(status: string, content: ReturnType<typeof useIntlaye
     CATEGORY_STATUS_CHANGED: content.actionCategoryStatusChanged,
     TAG_STATUS_CHANGED: content.actionTagStatusChanged,
     EVIDENCE_RETRY_SCHEDULED: content.actionEvidenceRetryScheduled,
+    EVIDENCE_REQUESTED: content.actionEvidenceRequested,
+    RESOURCE_REVIEWED: content.actionResourceReviewed,
+    USERS_EXPORTED: content.actionUsersExported,
+    RESOURCES_EXPORTED: content.actionResourcesExported,
+    STATISTICS_EXPORTED: content.actionStatisticsExported,
+    PLATFORM_SETTING_UPDATED: content.actionPlatformSettingUpdated,
+    USER_PROVISIONED: content.actionUserProvisioned,
+    USER_UPDATED: content.actionUserUpdated,
+    USER_DISABLED: content.actionUserDisabled,
+    PASSWORD_RESET_REQUESTED: content.actionPasswordResetRequested,
+    CATEGORY_CREATED: content.actionCategoryCreated,
+    CATEGORY_UPDATED: content.actionCategoryUpdated,
+    CATEGORY_MERGED: content.actionCategoryMerged,
+    CATEGORY_DELETED: content.actionCategoryDeleted,
+    TAG_CREATED: content.actionTagCreated,
+    TAG_UPDATED: content.actionTagUpdated,
+    TAG_MERGED: content.actionTagMerged,
+    TAG_DELETED: content.actionTagDeleted,
+    OPERATIONAL_ALERT_RESOLVED: content.actionOperationalAlertResolved,
+    EVIDENCE_RETRYABLE_JOBS_HIGH: content.alertEvidenceRetriesHigh,
+    SEARCH_INDEX_RECOVERED: content.eventSearchIndexRecovered,
+    UPSTREAM_TIMEOUT: content.externalUpstreamTimeout,
   };
   return values[status] ?? status;
 }

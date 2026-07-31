@@ -66,15 +66,15 @@ export function AdminWorkspace({ locale, section }: { locale: string; section: A
   if (!permitted) return <AccessState message={content.accessDenied} />;
 
   return (
-    <div className="grid gap-10 lg:grid-cols-[13.5rem_minmax(0,1fr)] lg:items-start">
-      <aside className="lg:sticky lg:top-6">
+    <div className="grid min-w-0 gap-8 2xl:grid-cols-[13.5rem_minmax(0,1fr)] 2xl:items-start 2xl:gap-10">
+      <aside className="min-w-0 2xl:sticky 2xl:top-6">
         <p className="m-0 text-xs font-semibold tracking-[0.1em] text-accent uppercase">
           {content.areaLabel}
         </p>
         <h1 className="mt-3 mb-0 text-xl font-semibold tracking-[-0.025em]">{content.title}</h1>
         <nav
           aria-label={String(content.title)}
-          className="mt-6 flex gap-1 overflow-x-auto pb-2 lg:flex-col lg:overflow-visible"
+          className="mt-6 flex w-full max-w-full gap-1 overflow-x-auto overscroll-x-contain pb-2 md:grid md:grid-cols-4 md:overflow-visible md:pb-0 xl:grid-cols-6 2xl:flex 2xl:flex-col"
         >
           <AdminNavigation locale={locale} section={section} administrator={administrator} />
         </nav>

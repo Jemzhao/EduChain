@@ -15,14 +15,14 @@ export function HomePage({ locale }: HomePageProps) {
 
   return (
     <main id="page-content">
-      <section className="border-b border-border py-20 sm:py-28 lg:py-36">
+      <section className="border-b border-border py-16 sm:py-24 lg:py-32">
         <Container>
           <div className="grid items-end gap-12 lg:grid-cols-[minmax(0,1fr)_22rem] lg:gap-20">
             <div className="max-w-4xl">
               <p className="mb-5 text-sm font-semibold tracking-[0.1em] text-accent uppercase">
                 {content.eyebrow}
               </p>
-              <h1 className="m-0 max-w-4xl text-5xl leading-[1.08] font-semibold tracking-[-0.045em] text-balance sm:text-6xl lg:text-7xl">
+              <h1 className="m-0 max-w-4xl text-[2.5rem] leading-[1.08] font-semibold tracking-[-0.045em] text-pretty sm:text-6xl lg:text-7xl">
                 {content.title}
               </h1>
               <p className="mt-7 max-w-2xl text-lg leading-8 text-ink-secondary sm:text-xl">
@@ -51,7 +51,7 @@ export function HomePage({ locale }: HomePageProps) {
         </Container>
       </section>
 
-      <section className="py-20 sm:py-28" id="foundation">
+      <section className="py-16 sm:py-24" id="foundation">
         <Container>
           <div className="max-w-3xl">
             <p className="mb-4 text-sm font-semibold tracking-[0.1em] text-accent uppercase">
@@ -61,9 +61,9 @@ export function HomePage({ locale }: HomePageProps) {
               {content.foundationTitle}
             </h2>
           </div>
-          <div className="mt-14 grid border-y border-border md:grid-cols-3">
+          <div className="mt-10 grid border-y border-border sm:mt-14 md:grid-cols-3">
             <article className="py-8 md:pr-8">
-              <span className="mb-8 flex size-9 items-center justify-center rounded-sm bg-accent-soft text-accent">
+              <span className="mb-5 flex size-9 items-center justify-center rounded-sm bg-accent-soft text-accent sm:mb-8">
                 <Check aria-hidden="true" className="size-4" />
               </span>
               <h3 className="m-0 text-xl font-semibold tracking-[-0.02em]">
@@ -72,7 +72,7 @@ export function HomePage({ locale }: HomePageProps) {
               <p className="mt-3 leading-7 text-ink-secondary">{content.publishDescription}</p>
             </article>
             <article className="border-t border-border py-8 md:border-t-0 md:border-l md:px-8">
-              <span className="mb-8 flex size-9 items-center justify-center rounded-sm bg-accent-soft text-accent">
+              <span className="mb-5 flex size-9 items-center justify-center rounded-sm bg-accent-soft text-accent sm:mb-8">
                 <Check aria-hidden="true" className="size-4" />
               </span>
               <h3 className="m-0 text-xl font-semibold tracking-[-0.02em]">
@@ -81,7 +81,7 @@ export function HomePage({ locale }: HomePageProps) {
               <p className="mt-3 leading-7 text-ink-secondary">{content.searchDescription}</p>
             </article>
             <article className="border-t border-border py-8 md:border-t-0 md:border-l md:pl-8">
-              <span className="mb-8 flex size-9 items-center justify-center rounded-sm bg-accent-soft text-accent">
+              <span className="mb-5 flex size-9 items-center justify-center rounded-sm bg-accent-soft text-accent sm:mb-8">
                 <Check aria-hidden="true" className="size-4" />
               </span>
               <h3 className="m-0 text-xl font-semibold tracking-[-0.02em]">
@@ -93,9 +93,9 @@ export function HomePage({ locale }: HomePageProps) {
         </Container>
       </section>
 
-      <section className="border-y border-border bg-surface py-20 sm:py-28" id="workflow">
+      <section className="border-y border-border bg-surface py-16 sm:py-24" id="workflow">
         <Container>
-          <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
+          <div className="grid gap-9 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
             <div>
               <p className="mb-4 text-sm font-semibold tracking-[0.1em] text-accent uppercase">
                 {content.workflowLabel}

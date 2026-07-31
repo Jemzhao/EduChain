@@ -90,7 +90,7 @@ export function VerificationCenter({ locale }: { locale: string }) {
         <p className="m-0 text-sm font-semibold tracking-[0.1em] text-accent uppercase">
           {content.eyebrow}
         </p>
-        <h1 className="mt-5 mb-0 break-all text-4xl leading-[1.12] font-semibold tracking-[-0.045em] text-balance sm:text-6xl">
+        <h1 className="mt-5 mb-0 break-words text-4xl leading-[1.12] font-semibold tracking-[-0.045em] text-pretty sm:text-6xl">
           {content.verifyTitle}
         </h1>
         <p className="mt-6 mb-0 text-lg leading-8 text-ink-secondary">

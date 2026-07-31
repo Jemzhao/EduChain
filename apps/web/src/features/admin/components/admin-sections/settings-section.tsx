@@ -7,7 +7,7 @@ import { useId, useState } from "react";
 import { Button } from "@/components/primitives/button";
 import { updateAdminPlatformSetting } from "@/data-access/mutations/admin";
 import { getAdminPlatformSettings } from "@/data-access/queries/admin";
-import { Loading, LoadError, SectionHeader, StatusBadge } from "../admin-ui";
+import { Loading, LoadError, SectionHeader, StatusBadge, statusText } from "../admin-ui";
 
 export function SettingsSection() {
   const content = useIntlayer("admin");
@@ -52,7 +52,7 @@ function SettingEditor({ setting }: { setting: components["schemas"]["PlatformSe
           <h2 className="m-0 font-mono text-sm font-semibold">{setting.key}</h2>
           <p className="mt-2 mb-0 text-xs text-ink-tertiary">
             {setting.publicVisible ? content.settingPublic : content.settingPrivate} ·{" "}
-            {setting.type}
+            {statusText(setting.type, content)}
           </p>
         </div>
         <StatusBadge>v{setting.version}</StatusBadge>

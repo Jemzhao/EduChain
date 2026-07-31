@@ -2,6 +2,7 @@ import Link from "next/link";
 import { useIntlayer } from "next-intlayer/server";
 
 import { Container } from "./container";
+import { MobileNavigation } from "./mobile-navigation";
 import { SessionNavigation } from "./session-navigation";
 import { ThemeSwitcher } from "./theme-switcher";
 import { localizedRoute } from "@/lib/routing/localized-route";
@@ -23,48 +24,54 @@ export function SiteHeader({ locale }: SiteHeaderProps) {
       >
         {content.skipToContent}
       </a>
-      <Container className="flex min-h-16 items-center justify-between gap-6">
+      <Container className="flex min-h-16 items-center justify-between gap-3">
         <Link
-          className="text-base font-semibold tracking-[-0.02em] no-underline"
+          className="shrink-0 text-base font-semibold tracking-[-0.02em] no-underline"
           href={localizedRoute(locale)}
         >
           {content.brand}
         </Link>
-        <nav className="flex items-center gap-2 sm:gap-5" aria-label={String(content.brand)}>
+        <nav
+          className="flex min-w-0 items-center gap-2 xl:gap-5"
+          aria-label={String(content.brand)}
+        >
           <Link
-            className="hidden rounded-sm px-2 py-2 text-sm text-ink-secondary no-underline hover:text-ink sm:inline-flex"
+            className="hidden min-h-10 items-center whitespace-nowrap rounded-sm px-2 text-sm text-ink-secondary no-underline hover:text-ink xl:inline-flex"
             href={localizedRoute(locale, "/discover")}
           >
             {content.discover}
           </Link>
           <Link
-            className="hidden rounded-sm px-2 py-2 text-sm text-ink-secondary no-underline hover:text-ink lg:inline-flex"
+            className="hidden min-h-10 items-center whitespace-nowrap rounded-sm px-2 text-sm text-ink-secondary no-underline hover:text-ink xl:inline-flex"
             href={localizedRoute(locale, "/community")}
           >
             {content.community}
           </Link>
           <Link
-            className="hidden rounded-sm px-2 py-2 text-sm text-ink-secondary no-underline hover:text-ink sm:inline-flex"
+            className="hidden min-h-10 items-center whitespace-nowrap rounded-sm px-2 text-sm text-ink-secondary no-underline hover:text-ink xl:inline-flex"
             href={localizedRoute(locale, "/verify")}
           >
             {content.verify}
           </Link>
           <Link
-            className="hidden rounded-sm px-2 py-2 text-sm text-ink-secondary no-underline hover:text-ink xl:inline-flex"
+            className="hidden min-h-10 items-center whitespace-nowrap rounded-sm px-2 text-sm text-ink-secondary no-underline hover:text-ink xl:inline-flex"
             href={localizedRoute(locale, "/ledger")}
           >
             {content.ledger}
           </Link>
-          <ThemeSwitcher />
-          <Link
-            aria-label={String(content.languageLabel)}
-            className="inline-flex min-h-10 items-center rounded-sm border border-border bg-surface px-3 text-sm font-medium no-underline hover:bg-surface-subtle"
-            href={localizedRoute(alternateLocale)}
-            hrefLang={alternateLocale}
-          >
-            {alternateLabel}
-          </Link>
-          <SessionNavigation locale={locale} />
+          <div className="hidden shrink-0 items-center gap-2 sm:flex xl:gap-5">
+            <ThemeSwitcher />
+            <Link
+              aria-label={String(content.languageLabel)}
+              className="inline-flex min-h-10 shrink-0 items-center whitespace-nowrap rounded-sm border border-border bg-surface px-3 text-sm font-medium no-underline hover:bg-surface-subtle"
+              href={localizedRoute(alternateLocale)}
+              hrefLang={alternateLocale}
+            >
+              {alternateLabel}
+            </Link>
+            <SessionNavigation locale={locale} />
+          </div>
+          <MobileNavigation locale={locale} />
         </nav>
       </Container>
     </header>

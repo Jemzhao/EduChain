@@ -41,7 +41,7 @@ export function LedgerPage({ locale }: { locale: string }) {
         <p className="m-0 text-sm font-semibold tracking-[0.1em] text-accent uppercase">
           {content.eyebrow}
         </p>
-        <h1 className="mt-4 mb-0 text-5xl font-semibold tracking-[-0.045em] sm:text-6xl">
+        <h1 className="mt-4 mb-0 text-4xl font-semibold tracking-[-0.045em] text-pretty sm:text-6xl">
           {content.title}
         </h1>
         <p className="mt-5 max-w-3xl text-lg leading-8 text-ink-secondary">{content.description}</p>
@@ -135,39 +135,87 @@ export function LedgerPage({ locale }: { locale: string }) {
         ) : blocks.data.items.length === 0 ? (
           <p className="py-16 text-center text-ink-tertiary">{content.notFound}</p>
         ) : (
-          <div className="mt-7 overflow-x-auto rounded-md border border-border bg-surface">
-            <table className="w-full min-w-[52rem] border-collapse text-left text-sm">
-              <thead className="bg-surface-subtle text-xs text-ink-tertiary">
-                <tr>
-                  <th className="px-5 py-3">{content.blockHeight}</th>
-                  <th className="px-5 py-3">{content.backend}</th>
-                  <th className="px-5 py-3">{content.network}</th>
-                  <th className="px-5 py-3">{content.blockHash}</th>
-                  <th className="px-5 py-3 text-right">{content.transactions}</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-border">
-                {blocks.data.items.map((block) => (
-                  <tr key={`${block.backend}:${block.networkId}:${block.blockHeight}`}>
-                    <td className="px-5 py-4 font-semibold">
-                      <Link
-                        className="text-accent no-underline hover:underline"
-                        href={blockRoute(locale, block.backend, block.networkId, block.blockHeight)}
-                      >
-                        #{block.blockHeight}
-                      </Link>
-                    </td>
-                    <td className="px-5 py-4">{sourceName(block.backend, content)}</td>
-                    <td className="px-5 py-4 font-mono text-xs">{block.networkId}</td>
-                    <td className="max-w-64 truncate px-5 py-4 font-mono text-xs">
-                      {block.blockHash}
-                    </td>
-                    <td className="px-5 py-4 text-right">{block.transactionCount}</td>
+          <>
+            <div className="mt-7 grid gap-3 lg:hidden">
+              {blocks.data.items.map((block) => (
+                <article
+                  className="rounded-md border border-border bg-surface p-4"
+                  key={`${block.backend}:${block.networkId}:${block.blockHeight}`}
+                >
+                  <div className="flex items-center justify-between gap-4 border-b border-border pb-3">
+                    <Link
+                      className="inline-flex min-h-10 items-center text-base font-semibold text-accent no-underline hover:underline"
+                      href={blockRoute(locale, block.backend, block.networkId, block.blockHeight)}
+                    >
+                      #{block.blockHeight}
+                    </Link>
+                    <span className="text-sm font-semibold text-ink-secondary">
+                      {block.transactionCount} {content.transactions}
+                    </span>
+                  </div>
+                  <dl className="mt-4 grid grid-cols-2 gap-x-4 gap-y-4">
+                    <div>
+                      <dt className="text-xs font-semibold text-ink-tertiary">{content.backend}</dt>
+                      <dd className="mt-1 ml-0 text-sm">{sourceName(block.backend, content)}</dd>
+                    </div>
+                    <div className="min-w-0">
+                      <dt className="text-xs font-semibold text-ink-tertiary">{content.network}</dt>
+                      <dd className="mt-1 ml-0 truncate font-mono text-xs" title={block.networkId}>
+                        {block.networkId}
+                      </dd>
+                    </div>
+                    <div className="col-span-2 min-w-0">
+                      <dt className="text-xs font-semibold text-ink-tertiary">
+                        {content.blockHash}
+                      </dt>
+                      <dd className="mt-1 ml-0 break-all font-mono text-xs leading-5 text-ink-secondary">
+                        {block.blockHash}
+                      </dd>
+                    </div>
+                  </dl>
+                </article>
+              ))}
+            </div>
+
+            <div className="mt-7 hidden overflow-x-auto rounded-md border border-border bg-surface lg:block">
+              <table className="w-full min-w-[52rem] border-collapse text-left text-sm">
+                <thead className="bg-surface-subtle text-xs text-ink-tertiary">
+                  <tr>
+                    <th className="px-5 py-3">{content.blockHeight}</th>
+                    <th className="px-5 py-3">{content.backend}</th>
+                    <th className="px-5 py-3">{content.network}</th>
+                    <th className="px-5 py-3">{content.blockHash}</th>
+                    <th className="px-5 py-3 text-right">{content.transactions}</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody className="divide-y divide-border">
+                  {blocks.data.items.map((block) => (
+                    <tr key={`${block.backend}:${block.networkId}:${block.blockHeight}`}>
+                      <td className="px-5 py-4 font-semibold">
+                        <Link
+                          className="inline-flex min-h-8 items-center text-accent no-underline hover:underline"
+                          href={blockRoute(
+                            locale,
+                            block.backend,
+                            block.networkId,
+                            block.blockHeight,
+                          )}
+                        >
+                          #{block.blockHeight}
+                        </Link>
+                      </td>
+                      <td className="px-5 py-4">{sourceName(block.backend, content)}</td>
+                      <td className="px-5 py-4 font-mono text-xs">{block.networkId}</td>
+                      <td className="max-w-64 truncate px-5 py-4 font-mono text-xs">
+                        {block.blockHash}
+                      </td>
+                      <td className="px-5 py-4 text-right">{block.transactionCount}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </>
         )}
       </section>
     </div>

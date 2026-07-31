@@ -16,6 +16,7 @@ import {
   updateAdminTag,
 } from "@/data-access/mutations/admin";
 import { getAdminTaxonomy } from "@/data-access/queries/admin";
+import { categoryDescription, categoryName } from "@/features/taxonomy/category-copy";
 import {
   GovernanceAction,
   Loading,
@@ -26,8 +27,24 @@ import {
   statusText,
 } from "../admin-ui";
 
+type AdminTaxonomyItem = components["schemas"]["AdminTaxonomyItem"];
+type TaxonomyCopy = Parameters<typeof categoryName>[0];
+
+function taxonomyItemLabel(item: AdminTaxonomyItem, taxonomy: TaxonomyCopy) {
+  return item.kind === "CATEGORY" && /^category\.[^.]+\.name$/.test(item.label)
+    ? categoryName(taxonomy, item.slug, item.label)
+    : item.label;
+}
+
+function taxonomyItemDescription(item: AdminTaxonomyItem, taxonomy: TaxonomyCopy) {
+  return item.kind === "CATEGORY" && /^category\.[^.]+\.description$/.test(item.description)
+    ? categoryDescription(taxonomy, item.slug, item.description)
+    : item.description;
+}
+
 export function TaxonomySection({ administrator }: { administrator: boolean }) {
   const content = useIntlayer("admin");
+  const taxonomy = useIntlayer("taxonomy");
   const queryClient = useQueryClient();
   const [editor, setEditor] = useState<
     { kind: "CATEGORY" | "TAG"; item?: components["schemas"]["AdminTaxonomyItem"] } | undefined
@@ -92,16 +109,17 @@ export function TaxonomySection({ administrator }: { administrator: boolean }) {
         ]}
       >
         {query.data.items.map((item) => {
+          const itemLabel = taxonomyItemLabel(item, taxonomy);
           const protectedItem = item.status === "ACTIVE" && item.referenceCount > 0;
           const mergeTarget = item.mergedIntoId
             ? query.data.items.find((candidate) => candidate.id === item.mergedIntoId)
             : undefined;
           return (
             <tr className="border-t border-border" key={item.id}>
-              <td className="px-4 py-4">
+              <td className="w-12 px-4 py-4">
                 {administrator && item.status === "DISABLED" && item.referenceCount === 0 ? (
                   <input
-                    aria-label={`${String(content.selectTaxonomy)} ${item.label}`}
+                    aria-label={`${String(content.selectTaxonomy)} ${String(itemLabel)}`}
                     checked={selected.some((candidate) => candidate.id === item.id)}
                     onChange={(event) =>
                       setSelected((current) =>
@@ -114,15 +132,15 @@ export function TaxonomySection({ administrator }: { administrator: boolean }) {
                   />
                 ) : null}
               </td>
-              <td className="px-4 py-4 text-xs font-semibold text-ink-tertiary">
+              <td className="whitespace-nowrap px-4 py-4 text-xs font-semibold text-ink-tertiary">
                 {statusText(item.kind, content)}
               </td>
-              <td className="px-4 py-4">
-                <p className="m-0 font-semibold">{item.label}</p>
+              <td className="min-w-56 px-4 py-4">
+                <p className="m-0 font-semibold">{itemLabel}</p>
                 <p className="mt-1 mb-0 text-xs text-ink-tertiary">{item.slug}</p>
                 {mergeTarget ? (
                   <p className="mt-1 mb-0 text-xs font-medium text-accent">
-                    {content.mergedInto}: {mergeTarget.label}
+                    {content.mergedInto}: {taxonomyItemLabel(mergeTarget, taxonomy)}
                   </p>
                 ) : null}
               </td>
@@ -131,7 +149,7 @@ export function TaxonomySection({ administrator }: { administrator: boolean }) {
               </td>
               <td className="px-4 py-4 text-sm text-ink-secondary">{item.referenceCount}</td>
               <td className="px-4 py-4 text-right">
-                <div className="flex justify-end gap-2">
+                <div className="flex min-w-[24rem] max-w-[28rem] flex-wrap justify-end gap-2">
                   {administrator && !item.mergedIntoId ? (
                     <Button
                       onClick={() => setEditor({ kind: item.kind, item })}
@@ -154,7 +172,7 @@ export function TaxonomySection({ administrator }: { administrator: boolean }) {
                     />
                   ) : null}
                   {protectedItem ? (
-                    <span className="self-center text-xs text-ink-tertiary">
+                    <span className="self-center whitespace-nowrap text-xs text-ink-tertiary">
                       {content.referencedProtected}
                     </span>
                   ) : administrator && !item.mergedIntoId ? (
@@ -170,7 +188,7 @@ export function TaxonomySection({ administrator }: { administrator: boolean }) {
                         );
                         await queryClient.invalidateQueries({ queryKey: ["admin"] });
                       }}
-                      target={item.label}
+                      target={itemLabel}
                       variant="secondary"
                     />
                   ) : null}
@@ -189,7 +207,7 @@ export function TaxonomySection({ administrator }: { administrator: boolean }) {
                         await queryClient.invalidateQueries({ queryKey: ["categories"] });
                         await queryClient.invalidateQueries({ queryKey: ["tags"] });
                       }}
-                      target={item.label}
+                      target={itemLabel}
                       variant="danger"
                     />
                   ) : null}
@@ -213,22 +231,23 @@ function TaxonomyMergeAction({
   onDone: () => Promise<unknown>;
 }) {
   const content = useIntlayer("admin");
+  const taxonomy = useIntlayer("taxonomy");
   const [targetId, setTargetId] = useState(candidates[0]?.id ?? "");
   if (candidates.length === 0) return null;
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex shrink-0 items-center gap-2">
       <label className="sr-only" htmlFor={`merge-${item.id}`}>
         {content.mergeTarget}
       </label>
       <select
-        className="min-h-10 max-w-36 rounded-sm border border-border bg-canvas px-2 text-xs"
+        className="min-h-10 w-44 rounded-sm border border-border bg-canvas px-2 text-xs"
         id={`merge-${item.id}`}
         onChange={(event) => setTargetId(event.target.value)}
         value={targetId}
       >
         {candidates.map((candidate) => (
           <option key={candidate.id} value={candidate.id}>
-            {candidate.label}
+            {taxonomyItemLabel(candidate, taxonomy)}
           </option>
         ))}
       </select>
@@ -238,7 +257,7 @@ function TaxonomyMergeAction({
           await mergeAdminTaxonomy(item, targetId, reason);
           await onDone();
         }}
-        target={item.label}
+        target={taxonomyItemLabel(item, taxonomy)}
         variant="secondary"
       />
     </div>
@@ -260,9 +279,14 @@ function TaxonomyEditor({
   onSaved: () => Promise<void>;
 }) {
   const content = useIntlayer("admin");
+  const taxonomy = useIntlayer("taxonomy");
   const [slug, setSlug] = useState(editor.item?.slug ?? "");
-  const [label, setLabel] = useState(editor.item?.label ?? "");
-  const [description, setDescription] = useState(editor.item?.description ?? "");
+  const [label, setLabel] = useState(
+    editor.item ? String(taxonomyItemLabel(editor.item, taxonomy)) : "",
+  );
+  const [description, setDescription] = useState(
+    editor.item ? String(taxonomyItemDescription(editor.item, taxonomy)) : "",
+  );
   const [parentId, setParentId] = useState(editor.item?.parentId ?? "");
   const [order, setOrder] = useState(editor.item?.order ?? 0);
   const [reason, setReason] = useState("");
@@ -355,7 +379,7 @@ function TaxonomyEditor({
                   .filter((category) => category.id !== editor.item?.id)
                   .map((category) => (
                     <option key={category.id} value={category.id}>
-                      {category.label}
+                      {taxonomyItemLabel(category, taxonomy)}
                     </option>
                   ))}
               </select>

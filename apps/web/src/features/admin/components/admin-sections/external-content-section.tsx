@@ -84,7 +84,7 @@ export function ExternalContentSection({ administrator }: { administrator: boole
                     </p>
                     {source.lastSyncError ? (
                       <p className="mt-2 mb-0 font-mono text-xs text-danger">
-                        {source.lastSyncError}
+                        {statusText(source.lastSyncError, content)}
                       </p>
                     ) : null}
                   </div>

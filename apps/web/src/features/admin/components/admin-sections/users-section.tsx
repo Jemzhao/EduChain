@@ -55,7 +55,7 @@ export function UsersSection({ currentUserId }: { currentUserId: string }) {
     <div>
       <SectionHeader title={content.userListTitle} description={content.userListDescription} />
       <div className="mt-6 flex flex-wrap items-end gap-3 rounded-md border border-border bg-surface p-4">
-        <label className="min-w-56 flex-1 text-xs font-semibold text-ink-tertiary">
+        <label className="w-full min-w-0 flex-1 text-xs font-semibold text-ink-tertiary sm:min-w-56">
           {content.searchUsers}
           <input
             className="mt-2 min-h-11 w-full rounded-sm border border-border bg-canvas px-3 text-sm text-ink"
@@ -132,7 +132,7 @@ export function UsersSection({ currentUserId }: { currentUserId: string }) {
           const own = item.user.id === currentUserId;
           return (
             <tr className="border-t border-border align-top" key={item.user.id}>
-              <td className="px-4 py-4">
+              <td className="w-12 px-4 py-4">
                 {!own ? (
                   <input
                     aria-label={`${String(content.selectUser)} ${item.user.displayName}`}
@@ -148,14 +148,14 @@ export function UsersSection({ currentUserId }: { currentUserId: string }) {
                   />
                 ) : null}
               </td>
-              <td className="px-4 py-4">
+              <td className="min-w-48 px-4 py-4">
                 <p className="m-0 font-semibold">{item.user.displayName}</p>
                 <p className="mt-1 mb-0 text-xs text-ink-tertiary">@{item.user.handle}</p>
                 <p className="mt-1 mb-0 text-xs text-ink-tertiary">{item.email}</p>
               </td>
-              <td className="px-4 py-4 text-sm text-ink-secondary">
+              <td className="min-w-32 px-4 py-4 text-sm text-ink-secondary">
                 {item.roles.map((role, index) => (
-                  <span key={role}>
+                  <span className="whitespace-nowrap" key={role}>
                     {index ? " · " : null}
                     {statusText(role, content)}
                   </span>
@@ -168,7 +168,7 @@ export function UsersSection({ currentUserId }: { currentUserId: string }) {
                 <DateValue value={item.createdAt} />
               </td>
               <td className="px-4 py-4 text-right">
-                <div className="flex flex-wrap justify-end gap-2">
+                <div className="grid min-w-[17rem] grid-cols-[auto_auto] justify-end gap-2">
                   <Button onClick={() => setEditor(item)} type="button" variant="quiet">
                     {content.editItem}
                   </Button>

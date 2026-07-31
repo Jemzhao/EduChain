@@ -59,7 +59,7 @@ export function AchievementsPage({ locale }: { locale: string }) {
         <p className="m-0 text-sm font-semibold tracking-[0.1em] text-accent uppercase">
           {content.eyebrow}
         </p>
-        <h1 className="mt-4 mb-0 text-5xl font-semibold tracking-[-0.045em] sm:text-6xl">
+        <h1 className="mt-4 mb-0 text-4xl font-semibold tracking-[-0.045em] text-pretty sm:text-6xl">
           {content.title}
         </h1>
         <p className="mt-5 max-w-3xl text-lg leading-8 text-ink-secondary">{content.description}</p>
@@ -139,7 +139,32 @@ export function AchievementsPage({ locale }: { locale: string }) {
           <Trophy aria-hidden="true" className="size-6 text-accent" />
           {content.leaderboardTitle}
         </h2>
-        <div className="mt-7 overflow-x-auto rounded-md border border-border bg-surface">
+        <ol className="mt-7 grid list-none gap-3 p-0 md:hidden">
+          {leaderboard.data.items.map((entry) => (
+            <li className="rounded-md border border-border bg-surface p-4" key={entry.user.id}>
+              <div className="flex items-start gap-3 border-b border-border pb-3">
+                <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-accent-soft text-sm font-semibold text-accent">
+                  {entry.rank}
+                </span>
+                <div className="min-w-0">
+                  <Link
+                    className="inline-flex min-h-8 items-center font-semibold no-underline hover:text-accent"
+                    href={localizedRoute(locale, `/creators/${entry.user.handle}`)}
+                  >
+                    {entry.user.displayName}
+                  </Link>
+                  <p className="mb-0 text-xs text-ink-tertiary">{levelFor(entry.level)}</p>
+                </div>
+              </div>
+              <dl className="mt-4 grid grid-cols-3 gap-3">
+                <LeaderboardStat label={content.publications} value={entry.publishedResources} />
+                <LeaderboardStat label={content.receivedLikes} value={entry.receivedLikes} />
+                <LeaderboardStat label={content.points} value={entry.points} />
+              </dl>
+            </li>
+          ))}
+        </ol>
+        <div className="mt-7 hidden overflow-x-auto rounded-md border border-border bg-surface md:block">
           <table className="w-full min-w-[42rem] border-collapse text-left text-sm">
             <thead className="bg-surface-subtle text-xs text-ink-tertiary">
               <tr>
@@ -181,6 +206,15 @@ function ProgressStat({ label, value }: { label: unknown; value: unknown }) {
     <div className="border-border py-4 sm:border-r sm:px-7 first:pl-0 last:border-r-0">
       <p className="m-0 text-sm text-ink-tertiary">{String(label)}</p>
       <p className="mt-2 mb-0 text-2xl font-semibold tracking-[-0.03em]">{String(value)}</p>
+    </div>
+  );
+}
+
+function LeaderboardStat({ label, value }: { label: unknown; value: unknown }) {
+  return (
+    <div className="min-w-0">
+      <dt className="text-xs leading-5 text-ink-tertiary">{String(label)}</dt>
+      <dd className="mt-1 ml-0 font-semibold">{String(value)}</dd>
     </div>
   );
 }

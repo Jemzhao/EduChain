@@ -30,7 +30,7 @@ export function InformationPage({ locale, page }: { locale: string; page: Inform
       <p className="m-0 text-sm font-semibold tracking-[0.1em] text-accent uppercase">
         {data.eyebrow}
       </p>
-      <h1 className="mt-4 mb-0 text-5xl font-semibold tracking-[-0.045em] sm:text-6xl">
+      <h1 className="mt-4 mb-0 text-4xl font-semibold tracking-[-0.045em] text-pretty sm:text-6xl">
         {data.title}
       </h1>
       <p className="mt-5 max-w-3xl text-lg leading-8 text-ink-secondary">{data.description}</p>

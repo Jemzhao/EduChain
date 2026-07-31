@@ -11,6 +11,7 @@ import {
   getAdminOperationalMetrics,
   getAdminStatistics,
 } from "@/data-access/queries/admin";
+import { categoryName } from "@/features/taxonomy/category-copy";
 import {
   DateValue,
   GovernanceAction,
@@ -47,19 +48,21 @@ export function AuditSection() {
       >
         {query.data.items.map((event) => (
           <tr className="border-t border-border align-top" key={event.id}>
-            <td className="px-4 py-4">
-              <p className="m-0 text-sm font-semibold">{event.action}</p>
-              <StatusBadge>{event.result}</StatusBadge>
+            <td className="min-w-48 px-4 py-4">
+              <p className="m-0 text-sm font-semibold">{statusText(event.action, content)}</p>
+              <StatusBadge>{statusText(event.result, content)}</StatusBadge>
             </td>
-            <td className="px-4 py-4 text-xs text-ink-secondary">
+            <td className="min-w-64 px-4 py-4 text-xs text-ink-secondary">
               {statusText(event.targetType, content)}
               <br />
-              <span className="font-mono">{event.targetId}</span>
+              <span className="whitespace-nowrap font-mono">{event.targetId}</span>
             </td>
-            <td className="max-w-sm px-4 py-4 text-sm leading-6 text-ink-secondary">
+            <td className="min-w-64 max-w-sm px-4 py-4 text-sm leading-6 text-ink-secondary">
               {event.reason ?? content.noValue}
             </td>
-            <td className="px-4 py-4 font-mono text-xs text-ink-tertiary">{event.requestId}</td>
+            <td className="whitespace-nowrap px-4 py-4 font-mono text-xs text-ink-tertiary">
+              {event.requestId}
+            </td>
             <td className="px-4 py-4 text-xs text-ink-tertiary">
               <DateValue value={event.createdAt} />
             </td>
@@ -162,8 +165,9 @@ export function HealthSection() {
                 <p className="mt-3 mb-0 text-sm font-semibold">
                   {statusText(alert.component, content)}
                 </p>
-                <p className="mt-1 mb-0 font-mono text-xs text-ink-tertiary">
-                  {alert.summaryCode} · {content.occurrences}: {alert.occurrenceCount}
+                <p className="mt-1 mb-0 text-xs text-ink-tertiary">
+                  {statusText(alert.summaryCode, content)} · {content.occurrences}:{" "}
+                  {alert.occurrenceCount}
                 </p>
               </div>
               {alert.status === "OPEN" ? (
@@ -195,7 +199,9 @@ export function HealthSection() {
         >
           {events.data.items.map((event) => (
             <tr className="border-t border-border" key={event.id}>
-              <td className="px-4 py-4 font-mono text-xs">{event.summaryCode}</td>
+              <td className="whitespace-nowrap px-4 py-4 text-sm font-semibold">
+                {statusText(event.summaryCode, content)}
+              </td>
               <td className="px-4 py-4 text-sm text-ink-secondary">
                 {statusText(event.targetType, content)}
               </td>
@@ -215,6 +221,7 @@ export function HealthSection() {
 
 export function StatisticsSection() {
   const content = useIntlayer("admin");
+  const taxonomy = useIntlayer("taxonomy");
   const { locale } = useLocale();
   const query = useQuery({
     queryKey: ["admin", "statistics"],
@@ -232,11 +239,31 @@ export function StatisticsSection() {
     [content.statisticsEvidence, query.data.evidenceRecords],
   ] as const;
   const distributions = [
-    [content.statisticsCategories, query.data.categories],
-    [content.statisticsTags, query.data.tags],
-    [content.statisticsResourceTypes, query.data.resourceTypes],
-    [content.statisticsEvidenceBackends, query.data.evidenceBackends],
-  ] as const;
+    {
+      title: content.statisticsCategories,
+      items: query.data.categories,
+      label: (key: string) => categoryName(taxonomy, key, key),
+    },
+    {
+      title: content.statisticsTags,
+      items: query.data.tags,
+      label: (key: string) =>
+        key
+          .split("-")
+          .map((part) => `${part.charAt(0).toUpperCase()}${part.slice(1)}`)
+          .join(" "),
+    },
+    {
+      title: content.statisticsResourceTypes,
+      items: query.data.resourceTypes,
+      label: (key: string) => statusText(key, content),
+    },
+    {
+      title: content.statisticsEvidenceBackends,
+      items: query.data.evidenceBackends,
+      label: (key: string) => statusText(key, content),
+    },
+  ];
   return (
     <div>
       <SectionHeader title={content.statisticsTitle} description={content.statisticsDescription} />
@@ -265,13 +292,13 @@ export function StatisticsSection() {
         ))}
       </dl>
       <div className="mt-8 grid gap-5 lg:grid-cols-2 xl:grid-cols-4">
-        {distributions.map(([title, items]) => (
+        {distributions.map(({ title, items, label }) => (
           <section className="rounded-md border border-border bg-surface p-5" key={String(title)}>
             <h2 className="m-0 text-lg font-semibold">{title}</h2>
             <ol className="mt-4 list-none divide-y divide-border p-0">
               {items.map((item) => (
                 <li className="flex items-center justify-between gap-4 py-3" key={item.key}>
-                  <span className="truncate text-sm text-ink-secondary">{item.key}</span>
+                  <span className="truncate text-sm text-ink-secondary">{label(item.key)}</span>
                   <span className="text-sm font-semibold">{item.count}</span>
                 </li>
               ))}

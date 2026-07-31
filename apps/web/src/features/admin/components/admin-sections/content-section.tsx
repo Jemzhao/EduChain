@@ -170,7 +170,7 @@ export function ContentSection() {
         >
           {resources.data.items.map((resource) => (
             <tr className="border-t border-border align-top" key={resource.id}>
-              <td className="px-4 py-4">
+              <td className="w-12 px-4 py-4">
                 <input
                   aria-label={`${String(content.selectResource)} ${resource.title}`}
                   checked={selectedResources.includes(resource.id)}
@@ -184,17 +184,17 @@ export function ContentSection() {
                   type="checkbox"
                 />
               </td>
-              <td className="px-4 py-4">
+              <td className="min-w-64 px-4 py-4">
                 <p className="m-0 max-w-md font-semibold">{resource.title}</p>
                 <p className="mt-1 mb-0 text-xs text-ink-tertiary">{resource.slug}</p>
               </td>
-              <td className="px-4 py-4 text-sm text-ink-secondary">
+              <td className="whitespace-nowrap px-4 py-4 text-sm text-ink-secondary">
                 {resource.author.displayName}
               </td>
               <td className="px-4 py-4">
                 <StatusBadge>{statusText(resource.status, content)}</StatusBadge>
               </td>
-              <td className="px-4 py-4 text-xs font-medium text-ink-tertiary">
+              <td className="whitespace-nowrap px-4 py-4 text-xs font-medium text-ink-tertiary">
                 {statusText(resource.evidenceStatus, content)}
               </td>
               <td className="px-4 py-4 text-right">

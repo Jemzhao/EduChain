@@ -75,19 +75,23 @@ export function EvidenceSection({ administrator }: { administrator: boolean }) {
         {query.data.items.map((job) => (
           <tr className="border-t border-border align-top" key={job.id}>
             <td className="px-4 py-4">
-              <p className="m-0 font-mono text-xs">{job.resourceId}</p>
-              <p className="mt-1 mb-0 font-mono text-[0.6875rem] text-ink-tertiary">{job.id}</p>
+              <p className="m-0 whitespace-nowrap font-mono text-xs">{job.resourceId}</p>
+              <p className="mt-1 mb-0 whitespace-nowrap font-mono text-[0.6875rem] text-ink-tertiary">
+                {job.id}
+              </p>
             </td>
-            <td className="px-4 py-4 text-sm">{statusText(job.backend, content)}</td>
+            <td className="whitespace-nowrap px-4 py-4 text-sm">
+              {statusText(job.backend, content)}
+            </td>
             <td className="px-4 py-4">
               <StatusBadge>{statusText(job.status, content)}</StatusBadge>
             </td>
             <td className="px-4 py-4 text-sm text-ink-secondary">{job.attemptCount}</td>
-            <td className="px-4 py-4 text-xs text-ink-tertiary">
-              {job.errorCode ?? content.noValue}
+            <td className="min-w-44 px-4 py-4 text-xs text-ink-tertiary">
+              {job.errorCode ? statusText(job.errorCode, content) : content.noValue}
             </td>
             <td className="px-4 py-4 text-right">
-              <div className="flex flex-wrap justify-end gap-2">
+              <div className="grid min-w-52 justify-stretch gap-2">
                 {administrator ? (
                   <GovernanceAction
                     actionLabel={content.ensureEvidence}

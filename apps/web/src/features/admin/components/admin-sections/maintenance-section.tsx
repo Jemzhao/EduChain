@@ -155,8 +155,8 @@ export function MaintenanceSection() {
       >
         {query.data.items.map((job) => (
           <tr className="border-t border-border align-top" key={job.id}>
-            <td className="px-4 py-4 text-sm font-semibold">{typeLabels[job.type]}</td>
-            <td className="max-w-xs px-4 py-4 text-sm text-ink-secondary">
+            <td className="min-w-44 px-4 py-4 text-sm font-semibold">{typeLabels[job.type]}</td>
+            <td className="min-w-56 max-w-xs px-4 py-4 text-sm text-ink-secondary">
               {job.type === "SYSTEM_ANNOUNCEMENT" ? job.payloadSummary : typeLabels[job.type]}
             </td>
             <td className="px-4 py-4">
