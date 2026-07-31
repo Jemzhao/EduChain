@@ -113,7 +113,7 @@ Mock 模式会在浏览器内启动与 OpenAPI 形状一致的模拟接口，不
 
 ### GitHub Pages Mock 演示
 
-仓库提供独立的静态导出模式，目标地址为 <https://jemzhaoo.github.io/EduChain/>。该演示使用浏览器内 Mock Service Worker，不连接 Java Server、Evidence Gateway 或生产数据；登录状态、草稿和互动数据只保存在当前浏览器中。
+仓库提供独立的静态导出模式，目标地址为 <https://jemzhao.github.io/EduChain/>。该演示使用浏览器内 Mock Service Worker，不连接 Java Server、Evidence Gateway 或生产数据；登录状态、草稿和互动数据只保存在当前浏览器中。
 
 本地生成与 GitHub Pages 一致的静态产物：
 
