@@ -26,7 +26,7 @@
     "zod": "4.5.4"
   },
   "devDependencies": {
-    "@intlayer/swc": "9.4.1",
+    "@intlayer/swc": "9.4.4",
     "@tailwindcss/postcss": "4.3.3",
     "@types/node": "24.13.3",
     "@types/react": "19.2.18",
