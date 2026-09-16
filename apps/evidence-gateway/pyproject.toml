@@ -24,7 +24,7 @@ dev = [
   "pytest==9.1.1",
   "ruff==0.16.5",
   "types-qrcode==8.2.0.20260518",
-  "types-reportlab==4.5.1.20260827",
+  "types-reportlab==5.0.0.20260911",
 ]
 
 [tool.hatch.build.targets.wheel]
