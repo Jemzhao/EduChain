@@ -13,7 +13,7 @@ dependencies = [
   "pydantic==2.13.5",
   "pydantic-settings==2.15.0",
   "qrcode==8.2",
-  "reportlab==4.4.9",
+  "reportlab==5.0.1",
   "uvicorn[standard]==0.52.4",
 ]
 
